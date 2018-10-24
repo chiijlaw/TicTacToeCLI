@@ -25,6 +25,17 @@ let validateMove = (row, col) => {
   }
 };
 
+let checkWinner = () => {
+  for (let i = 0; i < 3; i++) {
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    if (board[i].reduce(reducer) === "XXX") {
+      winner = "X";
+    } else if (board[i].reduce(reducer) === "OOO") {
+      winner = "O";
+    }
+  }
+};
+
 let ask = () => {
   rl.question(`Player ${player}, where would you like to go?`, answer => {
     let row = answer[0];
@@ -37,6 +48,7 @@ let ask = () => {
       } else {
         player = "X";
       }
+      checkWinner();
     } else {
       console.log("Invalid move. Please try again");
       ask();
